@@ -17,7 +17,7 @@ class MRTDProcessor:
         Should retrieve travel document information fields for encoding.
         """
         pass
-    
+
     def calculate_check_digit(self, field: str) -> int:
         """
         Calculates the check digit for a given field based on MRZ rules.
@@ -70,7 +70,7 @@ class MRTDProcessor:
             f"{fields['personal_number']}{self.calculate_check_digit(fields['personal_number'])}"
         ).ljust(44, "<")
         return line1, line2
-    
+
     def validate_mrz(self, line1: str, line2: str) -> list:
         """
         Validates the MRZ fields against their check digits.
@@ -92,4 +92,3 @@ class MRTDProcessor:
         if self.calculate_check_digit(decoded["personal_number"]) != decoded["personal_number_check"]:
             errors.append("Mismatch in personal number check digit.")
         return errors
-    
