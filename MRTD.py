@@ -21,11 +21,12 @@ class MRTDProcessor:
     def calculate_check_digit(self, field: str) -> int:
         """
         Calculates the check digit for a given field based on MRZ rules.
-        Create a mapping of each character to its index value in MRZ encoding (digits, uppercase letters, and '<').
         """
-        char_map = {char: idx for idx, char in enumerate(string.digits + string.ascii_uppercase + "<")}
-        total = sum(char_map[char] * self.weights[i % 3] for i, char in enumerate(field))
-        return total % 10
+        # Define the MRZ character set
+        mrz_characters = string.digits + string.ascii_uppercase + "<"
+        # Calculate the total using the character index multiplied by the corresponding weight
+        total = sum((mrz_characters.index(char) * self.weights[i % 3]) for i, char in enumerate(field))
+        return total % 10  
 
     def decode_mrz(self, line1: str, line2: str) -> dict:
         """

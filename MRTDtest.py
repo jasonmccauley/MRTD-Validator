@@ -39,6 +39,22 @@ class Test_MRTD_Processor(unittest.TestCase):
             self.assertIn(key, result)  # Verifying each key exists
             self.assertEqual(result[key], value)  # Verfying the value matches
 
+    # Route for testing the check digits of the MRZ string to later verify the info in it
+    def test_CheckDigit_calculator(self):       
+        # call the method to verify the check digit for Pass port number
+        check = MRTDProcessor()
+        # Checking if the result from the main function matches our test case 
+        self.assertEqual(check.calculate_check_digit("L898902C3"), 6)
+        # call the method to verify the check digit for Birth date 
+        # Checking if the result from the main function matches our test case 
+        self.assertEqual(check.calculate_check_digit("690806"), 1)
+        # call the method to verify the check digit for Expiration Date number
+        # Checking if the result from the main function matches our test case 
+        self.assertEqual(check.calculate_check_digit("120415"), 9)
+        # call the method to verify the check digit for Personal number
+        # Checking if the result from the main function matches our test case 
+        self.assertEqual(check.calculate_check_digit("ZE184226B"), 1)
+
     # Route for testing the decoding of the MRZ string to later verify the info in it
     def test_MRZ_decoder(self):
         '''
@@ -136,3 +152,6 @@ class Test_MRTD_Processor(unittest.TestCase):
         result2 = check.validate_mrz(line1_example, line2_example2)
         # Matching it with the results
         self.assertEqual(result2, expected_result2)
+
+if __name__ == '__main__':
+    unittest.main()
