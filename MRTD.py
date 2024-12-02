@@ -4,6 +4,13 @@ class MRTDProcessor:
         # Define weights for check digit calculation
         self.weights = [7, 3, 1]
 
+    def scan_mrz(self):
+        """
+        Placeholder for hardware scanner integration.
+        Should return two strings representing the MRZ lines.
+        """
+        pass
+
     def query_database(self):
         """
         Placeholder for database interaction.
@@ -63,3 +70,26 @@ class MRTDProcessor:
             f"{fields['personal_number']}{self.calculate_check_digit(fields['personal_number'])}"
         ).ljust(44, "<")
         return line1, line2
+    
+    def validate_mrz(self, line1: str, line2: str) -> list:
+        """
+        Validates the MRZ fields against their check digits.
+
+        :param line1: The first line of the MRZ.
+        :param line2: The second line of the MRZ.
+        :return: A list of errors indicating mismatched fields.
+        """
+        decoded = self.decode_mrz(line1, line2)
+        errors = []
+
+        # Validate fields against their check digits
+        if self.calculate_check_digit(decoded["passport_number"]) != decoded["passport_number_check"]:
+            errors.append("Mismatch in passport number check digit.")
+        if self.calculate_check_digit(decoded["birth_date"]) != decoded["birth_date_check"]:
+            errors.append("Mismatch in birth date check digit.")
+        if self.calculate_check_digit(decoded["expiration_date"]) != decoded["expiration_date_check"]:
+            errors.append("Mismatch in expiration date check digit.")
+        if self.calculate_check_digit(decoded["personal_number"]) != decoded["personal_number_check"]:
+            errors.append("Mismatch in personal number check digit.")
+        return errors
+    
