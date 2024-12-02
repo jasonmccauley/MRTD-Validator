@@ -1,12 +1,12 @@
 import unittest
-from unittest.mock import patch 
+from unittest.mock import patch
 from MRTD import MRTDProcessor
 
 class Test_MRTD_Processor(unittest.TestCase):
 
 
     # Route for testing database
-    @patch('MRTDV2.MRTDProcessor.query_database')  
+    @patch('MRTDV2.MRTDProcessor.query_database')
     def test_database(self, mock_query):
         '''
         In this mock test case we intilize a database and populate it. In this case we will be seperating
@@ -88,7 +88,7 @@ class Test_MRTD_Processor(unittest.TestCase):
         result = check.decode_mrz(line1_example, line2_example)
         # Comparing the results of the function to the expected results of before
         self.assertEqual(result, expected_result)
-        # testing each indivual key and value in the hash map to match the decoding 
+        # testing each indivual key and value in the hash map to match the decoding
         for key, value in expected_result.items():
             self.assertIn(key, result)  # Verifying each key exists
             self.assertEqual(result[key], value)  # Verfying the value matches
@@ -126,7 +126,7 @@ class Test_MRTD_Processor(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
     # Route for testing the validation of the feilds according to the check digits
-    # Added this test case to kill mutants 
+    # Added this test case to kill mutants
     def test_MRZ_validator_invalid(self):
         """
         Test validate_mrz with MRZ lines where some check digits are incorrect.
@@ -148,7 +148,7 @@ class Test_MRTD_Processor(unittest.TestCase):
         self.assertEqual(result1, expected_result1)
 
         # Validate passport number and personal number mismatches
-        # Running the examples through the function 
+        # Running the examples through the function
         result2 = check.validate_mrz(line1_example, line2_example2)
         # Matching it with the results
         self.assertEqual(result2, expected_result2)
