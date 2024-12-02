@@ -4,6 +4,33 @@ from MRTD import MRTDProcessor
 
 class Test_MRTD_Processor(unittest.TestCase):
 
+    # Route for testing Hardware scanner
+    @patch('MRTDV2.MRTDProcessor.scan_mrz')
+    def test_scan(self, mock_scan):
+        ''' 
+        Firstly, we "scan" the information on the passport, in this case we will be inputing it as a 
+        return value. The Information that we ar inputting consists of the MRZ values, with 2 rows of
+        information present.
+        '''
+        # Import the 2 rows of information 
+        mock_scan.return_value = (
+            "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<",
+            "L898902C36UTO7408122F1204159ZE184226B<<<<<<<1"
+        )
+        # Refrencing the scan_mrz method from MRTD.py as a placeholder function, along with its value
+        result = MRTDProcessor.scan_mrz()
+        # Verifying that the results from the main function matches up with our test case
+        self.assertEqual(
+            result,
+            (
+                "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<",
+                "L898902C36UTO7408122F1204159ZE184226B<<<<<<<1"
+            )
+        )
+        '''
+        This function will always pass, as we do not have an actaul scanner. The function in the main component
+        is known as a placeholder function that will pass any value. 
+        '''
 
     # Route for testing database
     @patch('MRTDV2.MRTDProcessor.query_database')
@@ -123,6 +150,22 @@ class Test_MRTD_Processor(unittest.TestCase):
             "personal_number_check": 1,
         })
         # checking if the results of the function is the same as the expected results
+        self.assertEqual(result, expected_result)
+
+    # Route for testing the validation of the feilds according to the check digits
+    def test_MRZ_validator(self):
+        '''
+        This function validates that the check digits are valid with the information given
+        '''
+        # We test when no errors exist in the system 
+        expected_result = []
+        # Setting the values for the imported fields
+        line1_example = "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<"
+        line2_example = "L898902C36UTO7408122F1204159ZE184226B<<<<<<<1"
+        # Getting the result of the validate function 
+        check = MRTDProcessor()
+        result = check.validate_mrz(line1_example, line2_example)
+        # We set the epected results to an emtpy array if it passes all the check digits
         self.assertEqual(result, expected_result)
 
     # Route for testing the validation of the feilds according to the check digits
