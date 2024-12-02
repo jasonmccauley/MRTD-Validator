@@ -1,0 +1,44 @@
+[*] Start mutation process:
+   - targets: MRTD
+   - tests: MRTDtest
+[*] 7 tests passed:
+   - MRTDtest [0.00218 s]
+[*] Start mutants generation and execution:
+   - [#   1] AOD MRTD: [0.00410 s] killed by test_MRZ_decoder (MRTDtest.Test_MRTD_Processor.test_MRZ_decoder)
+   - [#   2] AOR MRTD: [0.00381 s] incompetent
+   - [#   3] AOR MRTD: [0.00291 s] incompetent
+   - [#   4] AOR MRTD: [0.00176 s] killed by test_CheckDigit_calculator (MRTDtest.Test_MRTD_Processor.test_CheckDigit_calculator)
+   - [#   5] AOR MRTD: [0.00325 s] killed by test_CheckDigit_calculator (MRTDtest.Test_MRTD_Processor.test_CheckDigit_calculator)
+   - [#   6] AOR MRTD: [0.00109 s] killed by test_CheckDigit_calculator (MRTDtest.Test_MRTD_Processor.test_CheckDigit_calculator)
+   - [#   7] AOR MRTD: [0.00350 s] killed by test_CheckDigit_calculator (MRTDtest.Test_MRTD_Processor.test_CheckDigit_calculator)
+   - [#   8] AOR MRTD: [0.00153 s] killed by test_CheckDigit_calculator (MRTDtest.Test_MRTD_Processor.test_CheckDigit_calculator)
+   - [#   9] AOR MRTD: [0.00546 s] killed by test_MRZ_decoder (MRTDtest.Test_MRTD_Processor.test_MRZ_decoder)       
+   - [#  10] COI MRTD: [0.00101 s] killed by test_MRZ_validator (MRTDtest.Test_MRTD_Processor.test_MRZ_validator)   
+   - [#  11] COI MRTD: [0.00100 s] killed by test_MRZ_validator (MRTDtest.Test_MRTD_Processor.test_MRZ_validator)   
+   - [#  12] COI MRTD: [0.00204 s] killed by test_MRZ_validator (MRTDtest.Test_MRTD_Processor.test_MRZ_validator)   
+   - [#  13] COI MRTD: [0.00100 s] killed by test_MRZ_validator (MRTDtest.Test_MRTD_Processor.test_MRZ_validator)   
+   - [#  14] ROR MRTD: [0.00101 s] killed by test_MRZ_decoder (MRTDtest.Test_MRTD_Processor.test_MRZ_decoder)       
+   - [#  15] ROR MRTD: [0.00251 s] incompetent
+   - [#  16] ROR MRTD: [0.00101 s] killed by test_MRZ_validator (MRTDtest.Test_MRTD_Processor.test_MRZ_validator)   
+   - [#  17] ROR MRTD: [0.00099 s] killed by test_MRZ_validator (MRTDtest.Test_MRTD_Processor.test_MRZ_validator)   
+   - [#  18] ROR MRTD: [0.00100 s] killed by test_MRZ_validator (MRTDtest.Test_MRTD_Processor.test_MRZ_validator)   
+   - [#  19] ROR MRTD: [0.00201 s] killed by test_MRZ_validator (MRTDtest.Test_MRTD_Processor.test_MRZ_validator)   
+   - [#  20] SIR MRTD: [0.00000 s] incompetent
+   - [#  21] SIR MRTD: [0.00000 s] incompetent
+   - [#  22] SIR MRTD: [0.00000 s] incompetent
+   - [#  23] SIR MRTD: [0.00000 s] incompetent
+   - [#  24] SIR MRTD: [0.00000 s] incompetent
+   - [#  25] SIR MRTD: [0.00000 s] incompetent
+   - [#  26] SIR MRTD: [0.00000 s] incompetent
+   - [#  27] SIR MRTD: [0.00000 s] incompetent
+   - [#  28] SIR MRTD: [0.00000 s] incompetent
+   - [#  29] SIR MRTD: [0.00000 s] incompetent
+   - [#  30] SIR MRTD: [0.00000 s] incompetent
+   - [#  31] SIR MRTD: [0.00000 s] incompetent
+   - [#  32] SIR MRTD: [0.00000 s] incompetent
+[*] Mutation score [0.67492 s]: 100.0%
+   - all: 32
+   - killed: 16 (50.0%)
+   - survived: 0 (0.0%)
+   - incompetent: 16 (50.0%)
+   - timeout: 0 (0.0%)
