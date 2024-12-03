@@ -1,4 +1,5 @@
 import string
+
 class MRTDProcessor:
     def __init__(self):
         # Define weights for check digit calculation

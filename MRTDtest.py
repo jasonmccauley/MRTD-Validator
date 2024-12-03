@@ -12,7 +12,7 @@ class Test_MRTD_Processor(unittest.TestCase):
         return value. The Information that we ar inputting consists of the MRZ values, with 2 rows of
         information present.
         '''
-        # Import the 2 rows of information 
+        # Import the 2 rows of information
         mock_scan.return_value = (
             "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<",
             "L898902C36UTO7408122F1204159ZE184226B<<<<<<<1"
@@ -67,19 +67,19 @@ class Test_MRTD_Processor(unittest.TestCase):
             self.assertEqual(result[key], value)  # Verfying the value matches
 
     # Route for testing the check digits of the MRZ string to later verify the info in it
-    def test_CheckDigit_calculator(self):       
+    def test_CheckDigit_calculator(self):
         # call the method to verify the check digit for Pass port number
         check = MRTDProcessor()
-        # Checking if the result from the main function matches our test case 
+        # Checking if the result from the main function matches our test case
         self.assertEqual(check.calculate_check_digit("L898902C3"), 6)
-        # call the method to verify the check digit for Birth date 
-        # Checking if the result from the main function matches our test case 
+        # call the method to verify the check digit for Birth date
+        # Checking if the result from the main function matches our test case
         self.assertEqual(check.calculate_check_digit("690806"), 1)
         # call the method to verify the check digit for Expiration Date number
-        # Checking if the result from the main function matches our test case 
+        # Checking if the result from the main function matches our test case
         self.assertEqual(check.calculate_check_digit("120415"), 9)
         # call the method to verify the check digit for Personal number
-        # Checking if the result from the main function matches our test case 
+        # Checking if the result from the main function matches our test case
         self.assertEqual(check.calculate_check_digit("ZE184226B"), 1)
 
     # Route for testing the decoding of the MRZ string to later verify the info in it
@@ -157,12 +157,12 @@ class Test_MRTD_Processor(unittest.TestCase):
         '''
         This function validates that the check digits are valid with the information given
         '''
-        # We test when no errors exist in the system 
+        # We test when no errors exist in the system
         expected_result = []
         # Setting the values for the imported fields
         line1_example = "P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<"
         line2_example = "L898902C36UTO7408122F1204159ZE184226B<<<<<<<1"
-        # Getting the result of the validate function 
+        # Getting the result of the validate function
         check = MRTDProcessor()
         result = check.validate_mrz(line1_example, line2_example)
         # We set the epected results to an emtpy array if it passes all the check digits

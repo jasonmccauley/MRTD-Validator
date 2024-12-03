@@ -25,7 +25,7 @@ with open(decoded_file_path, "r") as f:
 # Initialize the MRTDProcessor
 check = MRTDProcessor()
 
-# Creating a function to measure performance 
+# Creating a function to measure performance
 def measure_performance():
     #Intilizing an array for the results
     results = []
@@ -51,7 +51,7 @@ def measure_performance():
                 **record["line1"],
                 **record["line2"]
             }
-            # Confirm all fields exist in each entry 
+            # Confirm all fields exist in each entry
             required_keys = {"type", "issuing_country", "last_name", "given_name", "passport_number", "country_code", "birth_date", "sex", "expiration_date", "personal_number"}
             # Mention which keys are missing for debugging purposes
             missing_keys = required_keys - fields.keys()
@@ -62,4 +62,23 @@ def measure_performance():
             check.encode_mrz(fields)
         # Record the time it finished and subtract it from the time it started, which gives the time it took
         encode_time = time.time() - start
-    results.append([k, decode_time, encode_time])
+
+        # Append results
+        results.append([k, decode_time, encode_time])
+
+    return results
+
+# Run performance testing
+performance_results = measure_performance()
+
+# Save results to a text file
+output_file = os.path.join(current_dir, "performance_data.txt")
+with open(output_file, "w") as txtfile:
+    # Write header
+    txtfile.write(f"{'Records':<10}{'Decode_Time':<15}{'Encode_Time':<15}\n")
+    txtfile.write("=" * 40 + "\n")
+    # Write data rows
+    for k, decode_time, encode_time in performance_results:
+        txtfile.write(f"{k:<10}{decode_time:<15.6f}{encode_time:<15.6f}\n")
+
+print(f"Performance testing complete. Results saved to {output_file}.")
