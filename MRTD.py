@@ -23,18 +23,21 @@ class MRTDProcessor:
         Calculates the check digit for a given field based on MRZ rules.
         """
         # Define the MRZ character set
-        mrz_characters = string.digits + string.ascii_uppercase + "<"
+        mrz_chars = string.digits + string.ascii_uppercase + "<"        
         # Calculate the total using the character index multiplied by the corresponding weight
-        total = sum((mrz_characters.index(char) * self.weights[i % 3]) for i, char in enumerate(field))
-        return total % 10  
+        weighted_sum = sum(
+            mrz_chars.index(char) * self.weights[i % 3] 
+            for i, char in enumerate(field)
+        )
+        return weighted_sum % 10
 
     def decode_mrz(self, line1: str, line2: str) -> dict:
         """
         Decodes the two MRZ strings into respective fields.
 
-        :param line1: The first line of the MRZ.
-        :param line2: The second line of the MRZ.
-        :return: A dictionary containing the decoded fields.
+        line1: The first line of the MRZ.
+        line2: The second line of the MRZ.
+        return: A dictionary containing the decoded fields.
         """
         # Adjsuted this line based on the data given in part 3 changing gender to sex, and name to last_name and given_name
         name_parts = line1[5:].rstrip("<").split("<<")
@@ -60,25 +63,28 @@ class MRTDProcessor:
         """
         Encodes fields into MRZ format strings.
 
-        :param fields: Dictionary containing travel document information fields.
-        :return: A tuple of two strings representing the MRZ.
+        fields: Dictionary containing travel document information fields.
+        return: A tuple of two strings representing the MRZ.
         """
-        line1 = f"{fields['type']}<{fields['issuing_country']}{fields['last_name']}<<{fields['given_name'].replace(' ', '<')}".ljust(44, "<")
+        line1 = f"{fields['type']}<{fields['issuing_country']}{fields['last_name']}<<{fields['given_name'].replace(' ', '<')}{'<' * 44}".replace(' ', '<')[:44]
+        
         line2 = (
             f"{fields['passport_number']}{self.calculate_check_digit(fields['passport_number'])}"
             f"{fields['country_code']}{fields['birth_date']}{self.calculate_check_digit(fields['birth_date'])}"
             f"{fields['sex']}{fields['expiration_date']}{self.calculate_check_digit(fields['expiration_date'])}"
             f"{fields['personal_number']}{self.calculate_check_digit(fields['personal_number'])}"
-        ).ljust(44, "<")
+        )
+        line2 = (line2 + '<' * 44)[:44]
+        
         return line1, line2
 
     def validate_mrz(self, line1: str, line2: str) -> list:
         """
         Validates the MRZ fields against their check digits.
 
-        :param line1: The first line of the MRZ.
-        :param line2: The second line of the MRZ.
-        :return: A list of errors indicating mismatched fields.
+        line1: The first line of the MRZ.
+        line2: The second line of the MRZ.
+        return: A list of errors indicating mismatched fields.
         """
         decoded = self.decode_mrz(line1, line2)
         errors = []
