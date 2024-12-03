@@ -29,9 +29,9 @@ check = MRTDProcessor()
 def measure_performance():
     #Intilizing an array for the results
     results = []
-    # I intilize a loop that goes through the first 100 files so the next loop can iterate through them in thousant increments
-    for k in range(101):
-                # starting the time function to keep track of the time it takes to decode
+    # Looping through the data set in increments of 1000
+    for k in range(1000, 10001, 1000):
+        # starting the time function to keep track of the time it takes to decode
         start = time.time()
         # Looping through the data to encode it dependent on what number k is at for the amount of files
         for record in encoded_records[:k]:
